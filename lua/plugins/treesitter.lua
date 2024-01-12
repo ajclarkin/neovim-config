@@ -1,33 +1,10 @@
--- Set up lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
-
-
-
-require("lazy").setup({
-    {
-        "navarasu/onedark.nvim",
-        config = function()
-            vim.cmd.colorscheme("onedark")
-        end,
-    },
-
+return {
     {
         "nvim-treesitter/nvim-treesitter",
         config = function()
             require("nvim-treesitter.configs").setup({
                 ensure_installed = {"c", "lua", "vim", "vimdoc", "query", "python", "sql"},
-                
+
                 auto_install = true,
 
                 highlight = {
@@ -78,7 +55,7 @@ require("lazy").setup({
                             ['@class.outer'] = '<c-v>', -- blockwise
                         },
 
-                       include_surrounding_whitespace = true,
+                        include_surrounding_whitespace = true,
                     },
                 },
             })
@@ -88,29 +65,4 @@ require("lazy").setup({
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
     },
-    {
-        "windwp/nvim-autopairs",
-
-        dependencies = { 'hrsh7th/nvim-cmp' },
-        config = function()
-            require("nvim-autopairs").setup {}
-            -- If you want to automatically add `(` after selecting a function or method
-            local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-            local cmp = require('cmp')
-            cmp.event:on(
-            'confirm_done',
-            cmp_autopairs.on_confirm_done()
-            )
-        end,
-    },
---    {
---        "nvim-lualine/lualine.nvim",
---        config = function()
---            require("lualine").setup({
---                icons_enabled = true,
---                theme = 'auto'
---            }),
---        end
---
---    }
-})
+}
