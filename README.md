@@ -7,6 +7,7 @@ out there (even kickstart) and so I've been writing my own.
 ## Config Reference
 
 The best reference I have found so far is the series of tutorials by [@vyrrho](https://github.com/vhyrro) on youtube.
+I've also broken the plugins out into their own files within lua/plugins/ in keeping with typecraft on youtube.
 
 
 ## Vim Movements
