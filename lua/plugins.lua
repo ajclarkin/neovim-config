@@ -103,4 +103,14 @@ require("lazy").setup({
             )
         end,
     },
+--    {
+--        "nvim-lualine/lualine.nvim",
+--        config = function()
+--            require("lualine").setup({
+--                icons_enabled = true,
+--                theme = 'auto'
+--            }),
+--        end
+--
+--    }
 })
