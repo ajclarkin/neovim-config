@@ -9,3 +9,6 @@ winget install "ripgrep msvc"
 # Needed for treesitter.
 winget install zip.zip
 
+# Node.js and npm are required for some features, particularly to get pyright working
+# (which is a language server for python.)
+winget install OpenJS.NodeJS.LTS
