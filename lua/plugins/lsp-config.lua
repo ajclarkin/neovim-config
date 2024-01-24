@@ -1,5 +1,8 @@
 return {
-    
+-- This is the combination of packages needed for language server. The LSP module required for any
+-- given language will be installed automatically with the current config, and every automatic_installation
+-- will have lua and python LSP installed.
+
 	{
 		"williamboman/mason.nvim",
 		config = function()
@@ -12,6 +15,7 @@ return {
 		config = function()
 			require("mason-lspconfig").setup({
 				ensure_installed = { "lua_ls", "pyright" },
+				automatic_installation = true,
 			})
 		end,
 	},
