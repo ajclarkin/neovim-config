@@ -32,6 +32,9 @@ return {
                     null_ls.builtins.formatting.ruff,
                     null_ls.builtins.formatting.black,
                     null_ls.builtins.formatting.isort,
+                    -- Markdown
+                    null_ls.builtins.formatting.prettierd,
+                    null_ls.builtins.formatting.markdownlint,
                 },
             })
 

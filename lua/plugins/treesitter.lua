@@ -3,13 +3,21 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
 			require("nvim-treesitter.configs").setup({
-				ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "python", "sql" },
+				ensure_installed = {
+					"c",
+					"lua",
+					"vim",
+					"vimdoc",
+					"query",
+					"python",
+					"markdown",
+                    "markdown_inline",
+				},
 
 				auto_install = true,
 
-				highlight = {
-					enable = true,
-				},
+				highlight = { enable = true },
+				indent = { enable = true },
 
 				-- I have changed the default keybindings in keeping with Vyhrro tutorial
 				incremental_selection = {
