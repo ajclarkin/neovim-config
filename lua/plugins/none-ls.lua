@@ -28,17 +28,10 @@ return {
                 sources = {
                     -- Lua
                     null_ls.builtins.formatting.stylua,
-                    -- Python
-                    null_ls.builtins.formatting.ruff,
-                    null_ls.builtins.formatting.black,
-                    null_ls.builtins.formatting.isort,
-                    -- Markdown
-                    null_ls.builtins.formatting.prettierd,
-                    null_ls.builtins.formatting.markdownlint,
                 },
             })
 
-            vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
+--            vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
         end,
     },
 }

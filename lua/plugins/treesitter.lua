@@ -8,10 +8,7 @@ return {
 					"lua",
 					"vim",
 					"vimdoc",
-					"query",
 					"python",
-					"markdown",
-                    "markdown_inline",
 				},
 
 				auto_install = true,

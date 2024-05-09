@@ -4,6 +4,7 @@
 --
 --
 -- General configuration options
+vim.g.mapleader = " "
 require("options")
 
 -- Lazy plugin manager and plugins
