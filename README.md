@@ -35,6 +35,12 @@ After cloning the repository, the next time you run neovim it will install the n
 ## Dependencies
 There are a few things that need to be installed for this configuration to work. Here they are listed under the component which requires them.
 
+#### Telescope
+This is a plugin for finding things within the documents and filesystem.
+```
+sudo apt install ripgrep fd-find
+```
+
 #### Stylua
 For styling LUA, this is useful for editting the neovim configuration docs.
 ```
