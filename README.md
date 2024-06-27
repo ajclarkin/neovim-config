@@ -35,10 +35,17 @@ After cloning the repository, the next time you run neovim it will install the n
 ## Dependencies
 There are a few things that need to be installed for this configuration to work. Here they are listed under the component which requires them.
 
+
 #### Telescope
 This is a plugin for finding things within the documents and filesystem.
 ```
 sudo apt install ripgrep fd-find
+```
+
+#### LSP File Watching
+This appears to need fswatch:
+```
+sudo apt install fswatch
 ```
 
 #### Stylua
@@ -63,5 +70,12 @@ This is the main language server provider for python. It requires manual install
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
 nvm install node
+```
+
+#### Python
+There's a section in the neovim manual on getting python working. In addition to the *python3-venv* installation, you also need to install the
+neovim packages for python. It does work without so I'm not sure what this adds, other than removing an error from :checkhealth
+```
+pip install neovim
 ```
 After installation, pyright should be installed on the next run of neovim.
