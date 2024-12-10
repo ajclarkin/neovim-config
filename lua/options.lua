@@ -1,6 +1,10 @@
 -- This file is called by init.lua
 -- You can find all these options by running command :options
 
+-- Nerd font
+vim.g.have_nerd_font = true
+
+
 -- Set line numbering
 vim.opt.number = true
 vim.opt.relativenumber = true
