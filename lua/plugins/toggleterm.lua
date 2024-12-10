@@ -15,6 +15,6 @@ return {
   },
 
 -- ToggleTerm keyboard shortcuts 
-vim.keymap.set("n", "t", ":ToggleTerm direction=float <CR>")
+vim.keymap.set("n", "<leader>t", ":ToggleTerm direction=float <CR>")
 }
 
