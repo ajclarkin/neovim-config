@@ -23,58 +23,58 @@ return {
   },
 
   {
-    "neovim/nvim-lspconfig",
-    lazy = false,
+    'neovim/nvim-lspconfig',
+    dependencies = { 'saghen/blink.cmp' },
+
     config = function()
-      -- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
+			local lspconfig = require("lspconfig")
 
-      local lspconfig = require("lspconfig")
+			local on_attach = function(client, bufnr)
+				if client.name == "ruff" then
+					client.server_capabilities.hoverProvider = false
+				end
+			end
 
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities,
-      })
-
-      -- pyright needs npm installed systemwide;
-      --
-      lspconfig.pyright.setup({
-        capabilities = capabilities,
-        -- Disable some of the features in favour of ruff_lsp
-        settings = {
-          pyright = {
-            -- Using Ruff's import organizer
-            disableOrganizeImports = true,
-          },
-          python = {
-            analysis = {
-              -- Ignore all files for analysis to exclusively use Ruff for linting
-              ignore = { "*" },
-            },
-          },
-        },
-      })
-
-      local on_attach = function(client, bufnr)
-        if client.name == "ruff_lsp" then
-          -- Disable hover in favor of Pyright
-          client.server_capabilities.hoverProvider = false
-        end
-      end
-
-      lspconfig.ruff.setup({
-        capabilities = capabilities,
-        init_options = {
-          settings = {
-            args = {},
-          },
-        },
-      })
-
+			lspconfig.pyright.setup({
+				capabilities = capabilities,
+				settings = {
+					pyright = {
+						disableOrganizeImports = true,
+					},
+					python = {
+						analysis = {
+							ignore = { "*" },
+						},
+					},
+				},
+			})
+			lspconfig.ruff.setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				init_options = {
+					settings = {
+						args = {},
+					},
+				},
+			})
+			lspconfig.lua_ls.setup({
+				capabilities = capabilities,
+				settings = {
+					Lua = {
+						diagnostics = {
+							globals = { "vim" },
+						},
+					},
+				},
+			})
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
       vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
-      vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
+      vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format, {})
+      vim.keymap.set({ "n", "v" }, "<leader>br", vim.lsp.buf.rename, {})
       vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
-    end,
-  },
+    end
+}
 }

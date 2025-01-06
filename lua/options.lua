@@ -52,3 +52,10 @@ vim.api.nvim_create_autocmd("TextYankPost", {
         vim.highlight.on_yank()
     end,
 })
+
+-- Create a global function to close terminal that can be used with ToggleTerm
+-- https://www.reddit.com/r/neovim/comments/1bjhadj/efficiently_switching_between_neovim_and_terminal/
+ExitTerm = function()
+  vim.cmd(":ToggleTerm");
+end
+
