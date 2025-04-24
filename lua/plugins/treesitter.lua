@@ -11,7 +11,12 @@ return {
           "query",
 					"python",
           "markdown",
-          "markdown_inline"
+          "markdown_inline",
+          "r",
+          "rnoweb", 
+          "yaml",
+          "latex",
+          "csv"
 				},
 
 				auto_install = true,
