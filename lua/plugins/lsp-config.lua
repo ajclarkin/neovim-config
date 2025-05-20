@@ -5,6 +5,7 @@ return {
 
   {
     "williamboman/mason.nvim",
+    version = "^1.0.0",
     lazy = false,
     config = function()
       require("mason").setup()
@@ -13,6 +14,7 @@ return {
 
   {
     "williamboman/mason-lspconfig.nvim",
+    version = "^1.0.0",
     lazy = false,
     config = function()
       require("mason-lspconfig").setup({
@@ -68,6 +70,12 @@ return {
 					},
 				},
 			})
+
+      lspconfig.r_language_server.setup({
+        capabilities = capabilities,
+        filetypes = {"r", "rmd", "quarto"}
+      })
+
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})

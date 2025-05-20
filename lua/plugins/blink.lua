@@ -1,6 +1,12 @@
 return {
 	"saghen/blink.cmp",
-	dependencies = "rafamadriz/friendly-snippets",
+	dependencies = {
+    "rafamadriz/friendly-snippets",
+    "saghen/blink.compat",
+    "R-nvim/cmp-r",
+    "R-nvim/R.nvim"
+  },
+
 	version = "*",
 
 	---@module 'blink.cmp'
@@ -16,12 +22,17 @@ return {
 		-- default list of enabled providers defined so that you can extend it
 		-- elsewhere in your config, without redefining it, due to `opts_extend`
 		sources = {
-			default = { "lsp", "path", "snippets", "buffer", "markdown"  },
+			default = { "lsp", "path", "snippets", "buffer", "markdown", "r"  },
       providers = {
             markdown = {
                 name = 'RenderMarkdown',
                 module = 'render-markdown.integ.blink',
                 fallbacks = { 'lsp' },
+            },
+
+            r = {
+                name = "r",
+                module = "blink.compat.source"
             },
         },
 			-- optionally disable cmdline completions
@@ -48,6 +59,3 @@ return {
 	-- opts_extend = { "sources.default" }<
 }
 
--- providers = {
---       markdown = { name = 'RenderMarkdown', module = 'render-markdown.integ.blink' },
---   },
