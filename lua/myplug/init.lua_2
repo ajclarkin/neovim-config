@@ -1,0 +1,105 @@
+local M = {}
+
+function M.open_floating_window()
+  local original_buf = vim.api.nvim_get_current_buf()
+  local original_pos = vim.api.nvim_win_get_cursor(0)
+  local menu_items = {
+    "First Option",
+    "Second Choice",
+    "Third Selection",
+    "Fourth Example",
+  }
+
+  local ui = vim.api.nvim_list_uis()[1]
+  local width = 32
+  local height = #menu_items + 5
+  local col = math.floor((ui.width - width) / 2)
+  local row = math.floor((ui.height - height) / 2)
+
+  local buf = vim.api.nvim_create_buf(false, true)
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    width = width,
+    height = height,
+    col = col,
+    row = row,
+    style = "minimal",
+    border = "rounded",
+  })
+
+  local display_lines = {
+    "╭" .. string.rep("─", width - 2) .. "╮",
+    "│ Choose an option (type number + <Enter>): │",
+  }
+  for i, item in ipairs(menu_items) do
+    local line = string.format("│ %2d. %-"..(width-8).."s │", i, item)
+    table.insert(display_lines, line)
+  end
+  table.insert(display_lines, "│                                              │")
+  table.insert(display_lines, "╰" .. string.rep("─", width - 2) .. "╯")
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, display_lines)
+
+  -- Track user input
+  local input = ""
+
+  -- Set buffer to modifiable so we can update the input line
+  vim.api.nvim_buf_set_option(buf, "modifiable", true)
+
+  -- Helper to update the input line
+  local function update_input_line()
+    vim.api.nvim_buf_set_lines(buf, height-2, height-1, false, { "│   Selection: " .. input .. string.rep(" ", width-18-#input) .. "│" })
+  end
+  update_input_line()
+
+  -- Map digits
+  for d = 0, 9 do
+    vim.api.nvim_buf_set_keymap(buf, 'n', tostring(d), '', {
+      noremap = true,
+      silent = true,
+      callback = function()
+        input = input .. tostring(d)
+        update_input_line()
+      end
+    })
+  end
+
+  -- Map backspace
+  vim.api.nvim_buf_set_keymap(buf, 'n', '<BS>', '', {
+    noremap = true,
+    silent = true,
+    callback = function()
+      input = input:sub(1, -2)
+      update_input_line()
+    end
+  })
+
+  -- Map Enter
+  vim.api.nvim_buf_set_keymap(buf, 'n', '<CR>', '', {
+    noremap = true,
+    silent = true,
+    callback = function()
+      local idx = tonumber(input)
+      if idx and menu_items[idx] then
+        vim.api.nvim_win_close(win, true)
+        vim.api.nvim_buf_set_text(
+          original_buf,
+          original_pos[1] - 1,
+          original_pos[2],
+          original_pos[1] - 1,
+          original_pos[2],
+          {menu_items[idx]}
+        )
+      else
+        -- Invalid selection, clear input
+        input = ""
+        update_input_line()
+      end
+    end
+  })
+
+  -- Escape to close
+  vim.api.nvim_buf_set_keymap(buf, 'n', '<Esc>', '<cmd>close<CR>', { noremap = true, silent = true })
+end
+
+return M
+

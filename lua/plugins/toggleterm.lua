@@ -15,7 +15,8 @@ return {
   },
 
 -- ToggleTerm keyboard shortcuts 
-vim.keymap.set("n", "<leader>t", ":ToggleTerm direction=float <CR>"),
+vim.keymap.set("n", "<leader>tt", ":ToggleTerm direction=float <CR>"),
+vim.keymap.set("n", "<leader>tp", ":TermExec cmd='python %' direction=float <CR>"),
 vim.keymap.set("t", "<esc><esc>", ExitTerm)
 }
 
