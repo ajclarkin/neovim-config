@@ -1,22 +1,19 @@
 return {
-  -- {'akinsho/toggleterm.nvim', version = "*", config = true}
-  -- or
-  {'akinsho/toggleterm.nvim',
-    version = "*", 
-    -- opts = {--[[ things you want to change go here]]
-    --
-    -- },
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    config = function()
+      require("toggleterm").setup()
 
-    -- config = function()
-    --   vim.keymap.set("n", "t", ":ToggleTerm<CR>", {})
-    -- end,
-    --
-    config = true
+      vim.keymap.set("n", "tt", "<cmd>1ToggleTerm direction=float <CR>", { desc = "Toggle floating terminal" })
+      vim.keymap.set("n", "tp", function()
+        vim.cmd.write()
+        -- Use a dedicated terminal number for running files, e.g. 2
+        vim.cmd("2TermExec size=20 direction=float go_back=0 cmd='python %'")
+      end, { desc = "Save and run current file in python (term 2)" })
+      vim.keymap.set("t", "<C-x>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
+      vim.keymap.set("t", "<Esc><Esc>", "<cmd>ToggleTerm<CR>", { desc = "Term: close with Esc Esc" })
+    end,
   },
-
--- ToggleTerm keyboard shortcuts 
-vim.keymap.set("n", "<leader>tt", ":ToggleTerm direction=float <CR>"),
-vim.keymap.set("n", "<leader>tp", ":TermExec cmd='python %' direction=float <CR>"),
-vim.keymap.set("t", "<esc><esc>", ExitTerm)
 }
 

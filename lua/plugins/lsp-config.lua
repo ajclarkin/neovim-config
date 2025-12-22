@@ -35,7 +35,18 @@ return {
 			local on_attach = function(client, bufnr)
 				if client.name == "ruff" then
 					client.server_capabilities.hoverProvider = false
+          client.server_capabilities.signatureHelpProvider = false
+          client.server_capabilities.completionProvider = false
+
 				end
+
+        local opts = { buffer = bufnr }
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+        vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
+        vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
+        vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format, {})
+        vim.keymap.set({ "n", "v" }, "<leader>br", vim.lsp.buf.rename, {})
+        vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
 			end
 
 			lspconfig.pyright.setup({
@@ -46,7 +57,9 @@ return {
 					},
 					python = {
 						analysis = {
-							ignore = { "*" },
+              typeCheckingMode = "standard",
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
 						},
 					},
 				},
@@ -76,13 +89,19 @@ return {
         filetypes = {"r", "rmd", "quarto"}
       })
 
+      vim.diagnostic.config({
+        virtual_text = {
+          prefix = "●",
+          spacing = 2,
+        },
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = true,
+      })
 
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-      vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
-      vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format, {})
-      vim.keymap.set({ "n", "v" }, "<leader>br", vim.lsp.buf.rename, {})
-      vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+      -- Show diagnostics for current line in a float
+      vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Line diagnostics" })
     end
 }
 }
